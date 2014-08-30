@@ -33,3 +33,12 @@ def calculate_source_cloud(documents):
     return source_tag_cloud
 
 
+
+URLs de ejemplo
+---------------
+
+De RSS:
+
+ * http://radiocut.fm/feeds/q?radio=nacional870&start=365&limit=10000
+ * http://radiocut.fm/feeds/q?radio=mitre&start=365&limit=10000
+

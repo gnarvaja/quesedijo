@@ -1,3 +1,6 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
 import sys
 import feedparser
 import datetime
@@ -20,8 +23,11 @@ field_weights = {
     "tags": 3,
 }
 
-common_words = "muy,de,la,el,y,del,en,los,las,a,para,un,una,con,que,al,su,por,mi,es,como".split(",")
-
+common_words = "todo,am,muy,de,la,el,y,del,en,los,las,a,para,un,una,unos,con,que,al,su,por,mi,es,como".split(",")
+preposiciones="a,ante,bajo,cabe,con,contra,de,desde,durante,en,entre,hacia,hasta,mediante,para,por,según,sin,so,sobre,tras,versus,vía".split(",")
+otras="no,como,qué,cuándo,cuánto,cuando,que,por,entrevista,mañana".split(",")
+common_words.extend(preposiciones)
+common_words.extend(otras)
 
 
 def crossdomain(origin=None, methods=None, headers=None,
@@ -81,6 +87,7 @@ def split_words(value):
     ret = []
     for word in value.split(","):
         ret.extend([w for w in word.split(" ") if w and w not in common_words])
+    ret = filter(lambda w: w and not w.isdigit(), ret)
     return ret
 
 
@@ -138,13 +145,13 @@ def calculate_source_cloud(source, period_type="day"):
     sorted_periods = sorted(source_tag_cloud.items(), key=lambda x: x[0][0])
     ret = []
     for (from_, to_), tag_cloud in sorted_periods:
-        sorted_words = sorted(tag_cloud.items(), key=lambda (word, freq): -freq)
+        sorted_words = sorted(tag_cloud.items(), key=lambda (word, freq): freq, reverse=True)
         words = [Word(word, freq) for word, freq in sorted_words]
         if words:
             ret.append({
                 "from": from_.strftime("%Y-%m-%d"),
                 "to": to_.strftime("%Y-%m-%d"),
-                "words": words
+                "words": words[:40]
                 })
     return ret
 
