@@ -1,4 +1,8 @@
-var data =  {
+var data = {
+  medios: []
+};
+
+var dummyData = {
   medios: [
   {
     name: "radio nacional",
@@ -77,8 +81,13 @@ function findData() {
   var url = "http://localhost:5000/week";
 
   $.getJSON(url, function(d) {
-    debugger;
     data = d;
+
+    var period = getPeriods(data)[0];
+    $( "#selected-date" ).text( periodLabel(period) );
+    drawTagClouds(data, period);
+
+    $( "#dates-slider" ).slider("option", "max", getPeriods(data).length);
   });
 }
 
@@ -99,10 +108,21 @@ function getPeriods(data) {
 function drawTagClouds(data, period) {
   var container = $(".medios");
   container.empty();
-  console.log("1");
+
+  var maxFontSize = 50;
+
+  var maxFreq = _.max(data.medios.map(function(medio) {
+    var medioPeriod = _.find(medio.periodos, function(p) {
+      return p.from === period.from;
+    });
+
+    if (medioPeriod) {
+      return _.max(medioPeriod.words, "freq").freq;
+    }
+    else return 0;
+  }));
 
   _.each(data.medios, function(medio) {
-    console.log(medio.name);
     var $medio = $("<li class='medio'><h2>" + medio.name + "</h2><div class='cloud' /></li>");
     container.append($medio);
 
@@ -111,16 +131,23 @@ function drawTagClouds(data, period) {
     });
 
     if (medioPeriod) {
-      var words = medioPeriod.words.map(function(w) {
-        return {text: w.word, size: w.freq};
-      });
+      var words = _.chain(medioPeriod.words)
+        .sortBy("freq")
+        .reverse()
+        .slice(0,15)
+        .map(function(w) {
+          return {text: w.word, size: w.freq};
+        })
+        .value();
 
-      d3.layout.cloud().size([300, 150])
+      d3.layout.cloud().size([600, 300])
       .words(words)
       .padding(5)
       .rotate(function() { return ~~(Math.random() * 2) * 90; })
       .font("Impact")
-      .fontSize(function(d) { return d.size * 2; })
+      .fontSize(function(d) {
+        return maxFontSize * d.size / maxFreq;
+      })
       .on("end", function(words) { return draw(words, $medio.find(".cloud")[0]); })
       .start();
     } else {
@@ -148,9 +175,6 @@ function bindSlider() {
     }
   });
 
-  var period = getPeriods(data)[0];
-  $( "#selected-date" ).text( periodLabel(period) );
-  drawTagClouds(data, period);
 }
 
 var fill = d3.scale.category20();
@@ -158,7 +182,7 @@ var fill = d3.scale.category20();
 
 function draw(words, elem) {
   d3.select(elem).append("svg")
-    .attr("width", 300)
+    .attr("width", 600)
     .attr("height", 300)
     .append("g")
     .attr("transform", "translate(150,150)")
