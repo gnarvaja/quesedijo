@@ -9,6 +9,7 @@ import calendar
 from collections import namedtuple
 
 app = flask.Flask(__name__)
+application = app
 
 Period = namedtuple("Period", "from_ to_ words")
 Word = namedtuple("Word", "word freq")
@@ -156,7 +157,7 @@ parsed_sources = {}
 def index():
     template = """<html>
         <body>
-            <form action="/add_source" method="GET">
+            <form action="add_source" method="GET">
                 Nombre: <input type="text" name="name"> <br/>
                 URL: <input type="text" name="url">
                 <input type="submit">
@@ -166,9 +167,9 @@ def index():
                 %s
             </dl>
             <ul>
-                <li><a href="/day">Por dia</a></li>
-                <li><a href="/week">Por semana</a></li>
-                <li><a href="/month">Por mes</a></li>
+                <li><a href="day">Por dia</a></li>
+                <li><a href="week">Por semana</a></li>
+                <li><a href="month">Por mes</a></li>
             </ul>
         </body>
         </html>

@@ -78,7 +78,7 @@ $(function() {
 });
 
 function findData() {
-  var url = "http://localhost:5000/week";
+  var url = "/server/week";
 
   $.getJSON(url, function(d) {
     data = d;
