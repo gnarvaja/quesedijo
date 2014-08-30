@@ -1,4 +1,8 @@
-var data =  {
+var data = {
+  medios: []
+};
+
+var dummyData = {
   medios: [
   {
     name: "radio nacional",
@@ -77,8 +81,13 @@ function findData() {
   var url = "http://localhost:5000/week";
 
   $.getJSON(url, function(d) {
-    debugger;
     data = d;
+
+    var period = getPeriods(data)[0];
+    $( "#selected-date" ).text( periodLabel(period) );
+    drawTagClouds(data, period);
+
+    $( "#dates-slider" ).slider("option", "max", getPeriods(data).length);
   });
 }
 
@@ -148,9 +157,6 @@ function bindSlider() {
     }
   });
 
-  var period = getPeriods(data)[0];
-  $( "#selected-date" ).text( periodLabel(period) );
-  drawTagClouds(data, period);
 }
 
 var fill = d3.scale.category20();
