@@ -5,7 +5,6 @@ import pprint
 import simplejson
 import flask
 import calendar
-import yaml
 from collections import namedtuple
 
 app = flask.Flask(__name__)
