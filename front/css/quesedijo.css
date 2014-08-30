@@ -1,7 +1,22 @@
 body {
-  padding-top: 50px;
+  padding-top: 50px;  
+  background-color: #ebedea;
 }
 .starter-template {
   padding: 40px 15px;
   text-align: center;
 }
+.custom-navbar {
+    background-color: #5a5a5a;
+    border-color: #050706;
+    border-width: 0 0 15px;
+}
+.cloud{
+    padding: 10px;
+    background-color: #ffffff;
+    height: 320px;
+}
+.medio{
+    padding:15px;
+}
+ul { list-style-type: none; }
