@@ -140,7 +140,7 @@ function drawTagClouds(data, period) {
         })
         .value();
 
-      d3.layout.cloud().size([600, 300])
+      d3.layout.cloud().size([700, 300])
       .words(words)
       .padding(5)
       .rotate(function() { return ~~(Math.random() * 2) * 90; })
@@ -179,13 +179,12 @@ function bindSlider() {
 
 var fill = d3.scale.category20();
 
-
 function draw(words, elem) {
   d3.select(elem).append("svg")
-    .attr("width", 600)
+    .attr("width", 700)
     .attr("height", 300)
     .append("g")
-    .attr("transform", "translate(150,150)")
+    .attr("transform", "translate(100,100)")
     .selectAll("text")
     .data(words)
     .enter().append("text")

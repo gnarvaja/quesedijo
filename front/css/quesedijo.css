@@ -12,10 +12,9 @@ body {
     border-width: 0 0 15px;
 }
 .cloud{
+    padding: 10px;
     background-color: #ffffff;
-    height:150px;
-
-    
+    height: 320px;
 }
 .medio{
     padding:15px;
