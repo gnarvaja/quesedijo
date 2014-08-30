@@ -123,7 +123,7 @@ function drawTagClouds(data, period) {
   }));
 
   _.each(data.medios, function(medio) {
-    var $medio = $("<li class='medio'><h2>" + medio.name + "</h2><div class='cloud' /></li>");
+    var $medio = $("<li class='medio container'><div class='row'><div class='col-md-2' ><h2>" + medio.name + "</h2></div><div class='cloud col-md-9' /></div></li>");
     container.append($medio);
 
     var medioPeriod = _.find(medio.periodos, function(p) {
