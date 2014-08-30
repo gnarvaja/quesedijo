@@ -70,7 +70,17 @@ var data =  {
 
 $(function() {
   bindSlider();
+  findData();
 });
+
+function findData() {
+  var url = "http://localhost:5000/week";
+
+  $.getJSON(url, function(d) {
+    debugger;
+    data = d;
+  });
+}
 
 function getPeriods(data) {
   var periods = data.medios.map(function(medio) {
