@@ -1,0 +1,26 @@
+{
+  "radiomitre":
+  {
+    periodos: [
+      {
+        from: "1/7/2014",
+        to: "7/7/2014",
+        words: [
+          {word: "fondos buitre", freq: 10},
+          {word: "inflacion", freq: 8},
+          {word: "dolar", freq: 5}
+        ]
+      },
+      {
+        from: "8/7/2014",
+        to: "15/7/2014",
+        words: [
+          {word: "fondos buitre", freq: 12},
+          {word: "inflacion", freq: 7},
+          {word: "dolar", freq: 9}
+        ]
+      }  
+    ]
+
+  }
+}
