@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import sys
+import re
 import feedparser
 import datetime
 import simplejson
@@ -11,6 +12,8 @@ import flask
 import calendar
 from collections import namedtuple
 
+
+splitpattern = re.compile("[-:@#.,; \s]")
 app = flask.Flask(__name__)
 application = app
 
@@ -84,6 +87,9 @@ def tokenizer(value):
 
 def split_words(value):
     value = value.lower()
+    ret = [x.strip() for x in splitpattern.split(value) if x.strip()]
+    return [x for x in ret if x not in common_words]
+
     ret = []
     for word in value.split(","):
         ret.extend([w for w in word.split(" ") if w and w not in common_words])
